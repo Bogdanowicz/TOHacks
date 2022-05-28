@@ -1,1 +1,3 @@
 # TOHacks
+The government of Ontario reported that $31 billion worth of food is wasted annually. Ontarians alone generated nearly 3.6 million tonnes of food and organic waste. Best before dates are not the 
+same as expiration dates which contribute to this problem. To tackle this issue, we have created a platform that connects charities to companies with good food that would otherwise be thrown out.

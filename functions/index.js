@@ -1,31 +1,13 @@
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
-
-const cfg = require('./config');
-
 const funcs = require('firebase-functions');
 const admin = require('firebase-admin');
 const express = require('express');
 
-const firebase = require('firebase');
-
-// const firebase = require('./node_modules/firebase/app')
-// const auth = require('./node_modules/firebase/auth')
-
-// import { initializeApp } from 'firebase/app';
-// import { getAuth, onAuthStateChanged, getRedirectResult } from 'firebase/auth';
-
-
 const app = express();
 const USER_TAB = 'users';
 
-console.log(cfg.getFirebaseConfig());
-
 admin.initializeApp();
-firebase.initializeApp(cfg.getFirebaseConfig());
-// initializeApp(cfg.getFirebaseConfig());
+
+const db = admin.firestore();
 
 app.get('/ping', (requ, resp) => { resp.send('Hello World'); });
 
@@ -43,7 +25,7 @@ app.get('/getUser', (requ, resp) => {
         });
 });
 
-app.get('/createUser', (requ, resp) => {
+app.post('/createUser', (requ, resp) => {
     if (requ.method !== 'POST')
         return resp.status(400).json({ error: "METHOD NOT ALLOWED" });
     const newUser = {
@@ -62,21 +44,29 @@ app.get('/createUser', (requ, resp) => {
         });
 });
 
-app.get('/signup', (requ, resp) => {
+app.post('/signup', (requ, resp) => {
     const newUser = {
         email: requ.body.email,
         password: requ.body.password,
         confirmPassword: requ.body.confirmPassword,
         handle: requ.body.handle,
     };
-    firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password)
-    .then(data => {
-        return resp.status(201).json({message: `created user ${data.user.uid}`});
-    })
-    .catch(e => {
-        console.error(e);
-        return resp.status(500).json({ message: 'INTERNAL SERVER ERROR' });
-    });
+
+    db.doc(`/users/${newUser.handle}`).get()
+        .then(doc => {
+            if (doc.exists) {
+                return resp.status(400).json({ handle: "HANDLE ALREADY TAKEN" });
+            } else {
+                return admin.auth().createUser(newUser);
+            }
+        })
+        .then(data => {
+            return resp.status(201).json({ message: 'CREATED USER' });
+        })
+        .catch(e => {
+            console.error(e);
+            return resp.status(500).json({ message: 'INTERNAL SERVER ERROR' });
+        })
 });
 
 exports.api = funcs.https.onRequest(app);

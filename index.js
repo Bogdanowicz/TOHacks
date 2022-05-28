@@ -2,37 +2,46 @@ const functions = require("firebase-functions");
 const admin = require('firebase-admin');
 
 admin.initializeApp();
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-exports.helloWorld = functions.https.onRequest((request, response) => {
-  functions.logger.info("Hello logs!", {structuredData: true});
-  response.send("Hello from Firebase!");
-});
+
+const express = require('express');
+const app = express();
 
 //try to fetch the donation posts 
-exports.getdonation = functions.https.onRequest((request, response) => {
-    admin.firestore().collection('donations').get()
+app.get('/donations', (request, response) => {
+    admin
+        .firestore()
+        .collection('donations')
+        .orderBy('createdAt','desc') //orders the donations by most recent 
+        .get()
         .then(data => {
             let donations = [];
             data.forEach(doc => {
-                donations.push(doc.data());
+                donations.push({
+                    donationId: doc.id,
+                    body: doc.data().body, //body of message
+                    organization: doc.data().organization, //organization name
+                    address: doc.data().address, //address of organization
+                    userHandle: doc.data().userHandle, //username of poster
+                    createdAt: doc.data().createdAt //time posted
+                });
             });
             return response.json(donations);
         })
         .catch(err => console.error(err))
 });
+
 //create a donation
-exports.createdonation = functions.https.onRequest((request, response) => {
+app.post('/donation', (request, response) => {
     const newdonation = {
         body: request.body.body,
         userHandle: request.body.userHandle,
         organization: request.body.organization,
         address: request.body.address,
-        createdAt: admin.firestore.Timestamp.fromDate(new Date())
+        createdAt: admin.firestore.Timestamp.fromDate(new Date()) 
     };
 
-    admin.firestore()
+    admin
+        .firestore()
         .collection('donations')
         .add(newdonation)
         .then(doc => {
@@ -43,3 +52,7 @@ exports.createdonation = functions.https.onRequest((request, response) => {
             console.error(err);
         })
 });
+
+// https://baseurl.com/api/
+
+exports.api = functions.https.onRequest(app);

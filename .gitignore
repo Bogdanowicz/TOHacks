@@ -15,6 +15,7 @@ firebase.json
 functions/.eslintrc.js
 functions/package-lock.json
 functions/package.json
+functions/config.js
 
 # Firebase config
 

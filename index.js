@@ -22,3 +22,24 @@ exports.getdonation = functions.https.onRequest((request, response) => {
         })
         .catch(err => console.error(err))
 });
+//create a donation
+exports.createdonation = functions.https.onRequest((request, response) => {
+    const newdonation = {
+        body: request.body.body,
+        userHandle: request.body.userHandle,
+        organization: request.body.organization,
+        address: request.body.address,
+        createdAt: admin.firestore.Timestamp.fromDate(new Date())
+    };
+
+    admin.firestore()
+        .collection('donations')
+        .add(newdonation)
+        .then(doc => {
+            response.json({message:`document ${doc.id} created successfully`});
+        })
+        .catch(err => {
+            response.status(500).json({error: 'An error has occured'});
+            console.error(err);
+        })
+});

@@ -18,16 +18,15 @@
                 to {-webkit-filter:hue-rotate(360deg);}
             }
             .formstuff {
-                text-align: center;
                 width: 500px;
                 height: 200px;
+                text-align: center;
             }
         </style>
     </head>
     <body>
         <form class="formstuff">
-            <p>Enter login credentials below</p>  
-            <div class="form-floating mb-3">
+            <div class="form-floating mb-3" >
                 <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
                 <label for="floatingInput">Email address</label>
               </div>
@@ -35,6 +34,14 @@
                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
                 <label for="floatingPassword">Password</label>
               </div>
+            <button type="button" class="btn btn-primary"
+              style="--bs-btn-padding-y: .79rem; --bs-btn-padding-x: .8rem; --bs-btn-font-size: .99rem;">
+                    Login
+            </button>
+            <button type="button" class="btn btn-primary"
+              style="--bs-btn-padding-y: .79rem; --bs-btn-padding-x: .8rem; --bs-btn-font-size: .99rem;">
+                    Sign-Up
+            </button>
         </form>
     </body>
 </html>

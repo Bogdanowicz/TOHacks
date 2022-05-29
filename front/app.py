@@ -6,10 +6,12 @@ from flask import Flask, send_from_directory, render_template, request, redirect
 # app configuration
 app = Flask(__name__, template_folder='templates', static_folder='css')
 
+ID_TOKEN_COOKIE_NAME = 'idToken'
+
 @app.route('/')
 @app.route('/home')
 def home_page():
-    return render_template('base.html')
+    return render_template('login.html')
 
 @app.route('/login', methods = ['POST', 'GET'])
 def login():
@@ -37,20 +39,31 @@ def login():
             "password": password,
             "returnSecureToken":True
         }
+        idTokenArg = 'idToken'
         response = requests.post(endpoint, json=headers).json()
-        print(response)
+        if idTokenArg not in response:
+            return 400
         idtoken = response['idToken']
+        print(idtoken)
+        resp = make_response(render_template("base.html"))
+        resp.set_cookie(ID_TOKEN_COOKIE_NAME, idtoken)
+        return resp, 200
 
     # print(response)
     # return None if 'error' in response else response['upload_url']
 
-
         # Redirect user to home page
         return redirect("/")
-
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("login.html")
+
+@app.route('/profile', methods = ['POST', 'GET'])
+def profile():
+    print('profile start!!')
+    idtoken = request.cookies.get('userID')
+    print(idtoken)
+    return redirect("/")
                 
 @app.route('/signup', methods = ['POST', 'GET'])
 def signup():
@@ -84,14 +97,12 @@ def signup():
     # print(response)
     # return None if 'error' in response else response['upload_url']
 
-
         # Redirect user to home page
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
-        return render_template("login.html")
-
+        return render_template("signup.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

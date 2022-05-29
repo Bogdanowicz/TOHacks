@@ -11,10 +11,26 @@ def home_page():
 
 @app.route('/login', methods = ['POST', 'GET'])
 def login():
-    if(request.method == 'POST'):
-        username = request.form.get('username')
-        password = request.form.get('password')
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+        # Ensure username was submitted
+        if not request.form.get("username"):
+            return "must provide username"
 
+        # Ensure password was submitted
+        elif not request.form.get("password"):
+            return "must provide password"
+
+        # Redirect user to home page
+        return redirect("/")
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("login.html")
+                
+@app.route('/signup', methods = ['POST', 'GET'])
+def signup():
+    pass
 
 
 if __name__ == "__main__":

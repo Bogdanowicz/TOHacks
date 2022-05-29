@@ -19,11 +19,16 @@
         </style>
     </head>
     <body>
-        <form action="javascript:login(lastname.value)">
-            <p>enter login credentials below</p>
-            <input type="text" name="email" placeholder="email" required> <br>
-            <input type="password" name="password" placeholder="password" required> <br>
-            <button type="submit">Login</button>  
+        <form>
+            <p>enter login credentials below</p>  
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <label for="floatingInput">Email address</label>
+              </div>
+              <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+              </div>
         </form>
     </body>
 </html>

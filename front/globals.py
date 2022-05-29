@@ -1,0 +1,1 @@
+FIREBASE_KEY='AIzaSyA4i_9C1kw83UtFqwDpQPFzqM1Kor-1plc'

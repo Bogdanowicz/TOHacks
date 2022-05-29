@@ -9,7 +9,7 @@ app = Flask(__name__, template_folder='templates', static_folder='css')
 @app.route('/')
 @app.route('/home')
 def home_page():
-    return render_template('base.html')
+    return render_template('login.html')
 
 @app.route('/login', methods = ['POST', 'GET'])
 def login():
@@ -44,10 +44,8 @@ def login():
     # print(response)
     # return None if 'error' in response else response['upload_url']
 
-
         # Redirect user to home page
         return redirect("/")
-
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("login.html")
@@ -90,7 +88,7 @@ def signup():
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
-        return render_template("login.html")
+        return render_template("signup.html")
 
 
 if __name__ == "__main__":

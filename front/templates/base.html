@@ -3,9 +3,29 @@
     <head>
         <meta name="theme-color" content="#ffffff">
         <meta charset="UTF-8">
-        <title>Simplescribe</title>
+        <title>Feeding Families</title>
+        <img src="Logo.png" alt="Logo" height="200px" width="400px"></img>
+        <style>
+           body { 
+               background-image:url('background.jpg');
+               background-size: 100vw 100vw;
+               text-align:center;
+               animation:hue 30s infinite linear;
+            }
+            @keyframes hue {
+                from {-webkit-filter:hue-rotate(0deg);}
+                to {-webkit-filter:hue-rotate(360deg);}
+            }
+        </style>
     </head>
     <body>
-        <h1>sample text</h1>
+         <center>
+             <form action="javascript:login(lastname.value)">
+                <p>enter login credentials below</p>
+                <input type="text" name="email" placeholder="email" required>
+                <input type="password" name="password" placeholder="password" required>
+                <button type="submit">Login</button>  
+            </form>
+        </center>
     </body>
 </html>

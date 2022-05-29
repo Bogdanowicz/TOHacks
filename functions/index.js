@@ -1,7 +1,6 @@
 const funcs = require('firebase-functions');
 const admin = require('firebase-admin');
 const express = require('express');
-
 const app = express();
 const USER_TAB = 'users';
 

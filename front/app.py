@@ -11,7 +11,7 @@ ID_TOKEN_COOKIE_NAME = 'idToken'
 @app.route('/')
 @app.route('/home')
 def home_page():
-    return render_template('base.html')
+    return render_template('login.html')
 
 @app.route('/login', methods = ['POST', 'GET'])
 def login():
@@ -52,10 +52,8 @@ def login():
     # print(response)
     # return None if 'error' in response else response['upload_url']
 
-
         # Redirect user to home page
         return redirect("/")
-
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("login.html")
@@ -99,17 +97,10 @@ def signup():
     # print(response)
     # return None if 'error' in response else response['upload_url']
 
-        return redirect("/")
-
-    # User reached route via GET (as by clicking a link or via redirect)
-    else:
-        return render_template("login.html")
         # Redirect user to home page
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
-    # else:
-    #     return render_template("login.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -5,6 +5,7 @@
 {% endblock %}
 {% block main %}
 
+<div class="d-flex justify-content-center">
 <form class="formstuff" action="/login" method="post">
     <div class="form-floating mb-3" >
         <input autocomplete="off" type="email" class="form-control" name="email" id="email" placeholder="name@example.com">
@@ -22,5 +23,6 @@
 <a type="button" value="signup" class="btn btn-primary" href="/signup" style="--bs-btn-padding-y: .79rem; --bs-btn-padding-x: .8rem; --bs-btn-font-size: .99rem;">
     Sign-Up
 </a>
+</div>
 
 {% endblock %}

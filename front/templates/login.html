@@ -4,25 +4,25 @@
     Log In
 {% endblock %}
 {% block main %}
-
 <div class="d-flex justify-content-center">
-<form class="formstuff" action="/login" method="post">
-    <div class="form-floating mb-3" >
-        <input autocomplete="off" type="email" class="form-control" name="email" id="email" placeholder="name@example.com">
-        <label for="email">Email address</label>
-        </div>
-    <div class="form-floating">
-        <input type="password" mx-auto w-auto class="form-control" name="password" id="password" placeholder="Password">
-        <label for="password">Password</label>
-        </div>
-    <button type="submit" class="btn btn-primary"
-        style="--bs-btn-padding-y: .79rem; --bs-btn-padding-x: .8rem; --bs-btn-font-size: .99rem;">
-            Login
-    </button>
-</form>
+    <form class="formstuff" action="/login" method="post">
+        <div class="form-floating mb-3" >
+            <input autocomplete="off" type="email" class="form-control" name="email" id="email" placeholder="name@example.com">
+            <label for="email">Email address</label>
+            </div>
+        <div class="form-floating">
+            <input type="password" mx-auto w-auto class="form-control" name="password" id="password" placeholder="Password">
+            <label for="password">Password</label>
+            </div>
+        <button type="submit" class="btn btn-primary"
+            style="--bs-btn-padding-y: .79rem; --bs-btn-padding-x: .8rem; --bs-btn-font-size: .99rem;">
+                Login
+        </button>
+    </form>
+</div>
+<div style="padding-top: 6px;">
 <a type="button" value="signup" class="btn btn-primary" href="/signup" style="--bs-btn-padding-y: .79rem; --bs-btn-padding-x: .8rem; --bs-btn-font-size: .99rem;">
     Sign-Up
 </a>
 </div>
-
 {% endblock %}

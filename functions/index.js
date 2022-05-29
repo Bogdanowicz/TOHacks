@@ -9,7 +9,23 @@ admin.initializeApp();
 
 const db = admin.firestore();
 
-app.get('/ping', (requ, resp) => { resp.send('Hello World'); });
+app.get('/ping', (requ, resp) => { 
+    const token = requ.body.idToken;
+
+    console.log(token);
+    admin.auth().verifyIdToken(token)
+        .then((decodedToken) => {
+            const uid = decodedToken.uid;
+            return admin.auth().getUser(uid)
+        })
+        .then((user) => {
+            return resp.status(201).json({ message: `${user.email}` });
+        })
+        .catch(e => {
+            console.error(e);
+            return resp.status(500).json({ message: 'INTERNAL SERVER ERROR' });
+        });
+});
 
 app.get('/getUser', (requ, resp) => {
     admin.firestore().collection(USER_TAB).get()
@@ -51,6 +67,12 @@ app.post('/signup', (requ, resp) => {
         confirmPassword: requ.body.confirmPassword,
         handle: requ.body.handle,
     };
+
+    if (newUser.email == undefined || newUser.password == undefined 
+        || newUser.confirmPassword !== newUser.password || newUser.handle == undefined) {
+        return resp.status(400).json({ handle: "BAD NEW USER INFO" });
+    }
+    console.log(newUser)
 
     db.doc(`/users/${newUser.handle}`).get()
         .then(doc => {
